@@ -12,11 +12,17 @@ import matplotlib.pyplot as plt
 #En esta celda se lee el archivo de crimenes y se gurada en max_crime los datos de los 
 #tres paises con mas crimen
 crimes = pd.read_csv("./Datos/SYB62_328_201904_Intentional Homicides and Other Crimes.csv")
+crimes = crimes.groupby("Región").mean()
 max_crime = pd.DataFrame()
 max_crime["Value"] = crimes["Value"].nlargest(3)
-max_crime = pd.merge(max_crime,crimes,on="Value")
-max_crime.to_csv("./Datos_filtrados/Los 3 países con mayor indice de criminalidad.csv")
-name_crime = max_crime["Intentional homicides and other crimes"]
+max_crime["Región"] = crimes["Value"].nlargest(3).index
+max_crime.to_csv("./Datos_filtrados/Los 3 países con mayor indice promedio de criminalidad.csv")
+name_crime = max_crime["Región"]
+#%%
+min_crime = pd.DataFrame()
+min_crime["Value"] = crimes["Value"].nsmallest(3)
+min_crime["Región"] = crimes["Value"].nsmallest(3).index
+min_crime.to_csv("./Datos_filtrados/Los 3 países con menor indice promedio de criminalidad.csv")
 #%%
 #En esta celda se grafica los datos optenidos en la anterior
 fig, axes = plt.subplots()
@@ -39,6 +45,7 @@ GNI_crime.to_csv("./Datos_filtrados/GNI per capita de los 3 países con mas crim
 Secondary_crime = Gross_enrolment_ratio_Secondary_education[(Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime[0]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime[1]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime[2])]
 Secondary_crime.to_csv("./Datos_filtrados/Ratio de inscripción a secundaria de los 3 países con mayor criminalidad.csv")
 #%%
+#En esta celda se grafica la variación del GNI per capita de los tres países con mayor indice de criminalidad 
 fig, axes = plt.subplots(figsize=(30,6))
 GNI_crime_0 = GNI_crime[GNI_crime["Country or Area"] == name_crime[0]].sort_values(by='Year', ascending=True)
 GNI_crime_1 = GNI_crime[GNI_crime["Country or Area"] == name_crime[1]].sort_values(by='Year', ascending=True)
@@ -51,4 +58,3 @@ axes.set_xlabel("Año")
 axes.set_ylabel("GNI per capita")
 axes.legend(loc="upper left")
 fig.savefig("./Gráficas/Variación del GNI per capita de los 3 países con mayor índice de criminalidad.pdf")
-#%%
