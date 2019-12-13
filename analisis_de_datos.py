@@ -39,3 +39,16 @@ GNI_crime.to_csv("./Datos_filtrados/GNI per capita de los 3 países con mas crim
 Secondary_crime = Gross_enrolment_ratio_Secondary_education[(Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime[0]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime[1]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime[2])]
 Secondary_crime.to_csv("./Datos_filtrados/Ratio de inscripción a secundaria de los 3 países con mayor criminalidad.csv")
 #%%
+fig, axes = plt.subplots(figsize=(30,6))
+GNI_crime_0 = GNI_crime[GNI_crime["Country or Area"] == name_crime[0]].sort_values(by='Year', ascending=True)
+GNI_crime_1 = GNI_crime[GNI_crime["Country or Area"] == name_crime[1]].sort_values(by='Year', ascending=True)
+GNI_crime_2 = GNI_crime[GNI_crime["Country or Area"] == name_crime[2]].sort_values(by='Year', ascending=True)
+axes.plot(GNI_crime_0["Year"], GNI_crime_0["Value"],"bo-",label=name_crime[0])
+axes.plot(GNI_crime_1["Year"], GNI_crime_1["Value"],"ro-",label=name_crime[1])
+axes.plot(GNI_crime_2["Year"], GNI_crime_2["Value"],"go-",label=name_crime[2])
+axes.set_title("Variación del GNI per capita de los 3 países con mayor índice de criminalidad")
+axes.set_xlabel("Año")
+axes.set_ylabel("GNI per capita")
+axes.legend(loc="upper left")
+fig.savefig("./Gráficas/Variación del GNI per capita de los 3 países con mayor índice de criminalidad.pdf")
+#%%
