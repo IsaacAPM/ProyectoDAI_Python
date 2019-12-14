@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Dec 10 15:16:25 2019
+Creado en diciembre 10 15:16:25 2019
 
-@author: ipiment
+@author: linces 
 """
 import numpy as np
 import pandas as pd
@@ -28,11 +28,11 @@ name_crime_min = min_crime["Región"]
 #En esta celda se grafica los datos optenidos en la anterior (max)
 fig, axes = plt.subplots(1,2,figsize=(15,6))
 axes[0].bar(name_crime_max,max_crime["Value"])
-axes[0].set_title("Paises con mayor índice de criminalidad")
+axes[0].set_title("Países con mayor índice de criminalidad")
 axes[0].set_xlabel("País")
 axes[0].set_ylabel("Índice de criminalidad")
 axes[1].bar(name_crime_min,min_crime["Value"])
-axes[1].set_title("Paises con menor índice de criminalidad")
+axes[1].set_title("Países con menor índice de criminalidad")
 axes[1].set_xlabel("País")
 axes[1].set_ylabel("Índice de criminalidad")
 fig.savefig("./Gráficas/países_mayor_menor_indice_crimenes.pdf")
