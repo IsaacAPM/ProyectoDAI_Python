@@ -49,8 +49,8 @@ GNI_crime_max.to_csv("./Datos_filtrados/GNI per capita de los 3 países con mas 
 GNI_crime_min.to_csv("./Datos_filtrados/GNI per capita de los 3 países con menos crimen.csv")
 #%%
 #En esta celda se extraen los datos de los paises obtenidos en la primera celda de la tabla Gross enrolment ratio secondary education
-Secondary_crime_max = Gross_enrolment_ratio_Secondary_education[(Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_max[0]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_max[1]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_max[2])]
-Secondary_crime_min = Gross_enrolment_ratio_Secondary_education[(Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_min[0]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_min[1]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_min[2])]
+Secondary_crime_max = Gross_enrolment_ratio_Secondary_education[(Gross_enrolment_ratio_Secondary_education["Sex"] == "All genders") & ((Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_max[0]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_max[1]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_max[2]))]
+Secondary_crime_min = Gross_enrolment_ratio_Secondary_education[(Gross_enrolment_ratio_Secondary_education["Sex"] == "All genders") & ((Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_min[0]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_min[1]) | (Gross_enrolment_ratio_Secondary_education["Reference Area"] == name_crime_min[2]))]
 Secondary_crime_max.to_csv("./Datos_filtrados/Ratio de inscripción a secundaria de los 3 países con mayor criminalidad.csv")
 Secondary_crime_min.to_csv("./Datos_filtrados/Ratio de inscripción a secundaria de los 3 países con menor criminalidad.csv")
 #%%
@@ -73,3 +73,22 @@ axes.set_xlabel("Año")
 axes.set_ylabel("GNI per capita")
 axes.legend(loc="upper left")
 fig.savefig("./Gráficas/Variación del GNI per capita de los 3 países con mayor y menor índice de criminalidad.pdf")
+#%%
+fig, axes = plt.subplots(figsize=(30,6))
+Seconda_crime_0 = Secondary_crime_max[Secondary_crime_max["Reference Area"] == name_crime_max[0]].sort_values(by='Time Period', ascending=True)
+Seconda_crime_1 = Secondary_crime_max[Secondary_crime_max["Reference Area"] == name_crime_max[1]].sort_values(by='Time Period', ascending=True)
+Seconda_crime_2 = Secondary_crime_max[Secondary_crime_max["Reference Area"] == name_crime_max[2]].sort_values(by='Time Period', ascending=True)
+Seconda_crime_3 = Secondary_crime_min[Secondary_crime_min["Reference Area"] == name_crime_min[0]].sort_values(by='Time Period', ascending=True)
+Seconda_crime_4 = Secondary_crime_min[Secondary_crime_min["Reference Area"] == name_crime_min[1]].sort_values(by='Time Period', ascending=True)
+Seconda_crime_5 = Secondary_crime_min[Secondary_crime_min["Reference Area"] == name_crime_min[2]].sort_values(by='Time Period', ascending=True)
+axes.plot(Seconda_crime_0["Time Period"], Seconda_crime_0["Observation Value"],"bo-",label=name_crime_max[0])
+axes.plot(Seconda_crime_1["Time Period"], Seconda_crime_1["Observation Value"],"ro-",label=name_crime_max[1])
+axes.plot(Seconda_crime_2["Time Period"], Seconda_crime_2["Observation Value"],"go-",label=name_crime_max[2])
+axes.plot(Seconda_crime_3["Time Period"], Seconda_crime_3["Observation Value"],"ko-",label=name_crime_min[0])
+axes.plot(Seconda_crime_4["Time Period"], Seconda_crime_4["Observation Value"],"mo-",label=name_crime_min[1])
+axes.plot(Seconda_crime_5["Time Period"], Seconda_crime_5["Observation Value"],"yo-",label=name_crime_min[2])
+axes.set_title("Variación del número de ingresos a educación secundaria de los 3 países con mayor y menor índice de criminalidad")
+axes.set_xlabel("Año")
+axes.set_ylabel("Iscripciones a educación secundaria")
+axes.legend(loc="upper left")
+fig.savefig("./Gráficas/Variación de ingresos a educación secundaria de los 3 países con mayor y menor índice de criminalidad.pdf")
