@@ -12,7 +12,8 @@ import matplotlib.pyplot as plt
 #En esta celda se lee el archivo de crimenes y se gurada en max_crime los datos de los 
 #tres paises con mas crimen
 crimes = pd.read_csv("./Datos/SYB62_328_201904_Intentional Homicides and Other Crimes.csv")
-crimes = crimes.groupby("Región").mean()
+crimes = crimes[crimes["Series"] == "Intentional homicide rates per 100,000"].groupby("Región").mean()
+#%%
 max_crime = pd.DataFrame()
 max_crime["Value"] = crimes["Value"].nlargest(3)
 max_crime["Región"] = crimes["Value"].nlargest(3).index
